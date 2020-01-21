@@ -98,17 +98,7 @@ You can generate the Belgian occurrence data cube by running the [R Markdown fil
 
 In the aggregation step, we also create a data cube at class level. The data cubes are authomatically generated in  folder `/data/processed/`.
 
-### Generate occurrence data cube for Europe
-
-At European level we are interested in occurrences of a list of taxa, which will be used for modelling and risk assessment. This list is maintained in file `modelling_species.tsv` in folder `references`. 
-
-You can generate the European occurrence data cube by running the [R Markdown files](https://rmarkdown.rstudio.com/) in `src/europe` following the order shown here below:
-
-1. `1_download.Rmd`: trigger a GBIF download and adding it to the list of triggered downloads
-3. `2_assign_grid.Rmd`: assign geographic cell code to occurrence data
-4. `3_aggregate.Rmd`: aggregate occurrences per taxa, year and cell code, the European _occurrence data cube_.
-
-Install any required packages.
+Install any required packages, first.
 
 ## Contributors
 
