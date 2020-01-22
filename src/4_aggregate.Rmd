@@ -57,9 +57,7 @@ sqlite_occ <- dbConnect(SQLite(), dbname = sqlite_path)
 
 # Aggregate at species level
 
-## Aggregate occurrences for accepted species
-
-### Aggregate occurrences
+## Aggregate occurrences
 
 Species, synonyms of that species and infraspecific taxa of that species all share the same `speciesKey`.
 
@@ -109,9 +107,6 @@ occ_cube_species <-
     n = "COUNT(_ROWID_)",
     min_coord_uncertainty = "MIN(`coordinateUncertaintyInMeters`)"
 )
-occ_cube_species <-
-  occ_cube_species %>%
-  mutate(speciesKey = as.integer(speciesKey))
 ```
 
 Preview:
@@ -120,11 +115,55 @@ Preview:
 occ_cube_species %>% head()
 ```
 
-### Map taxa
+Number of occurrences linked to taxa with higher rank than species:
+
+```{r occs_higher_rank_than_species}
+occ_cube_species %>%
+  filter(speciesKey == 0) %>%
+  select(n) %>%
+  colSums()
+```
+
+We will discard them:
+
+```{r remove_occs_with_higher_rank}
+occ_cube_species <-
+  occ_cube_species %>%
+  filter(speciesKey != 0)
+```
+
+## Map taxa
 
 Grouping by `speciesKey`, we loose informations about which taxa share the same  `speciesKey`. This information could be sometimes helpful. We extract it in a separate data.frame, `taxa_species`.
 
-First, we get all distinct taxa:
+For speeding up the extraction, we create an index on  `speciesKey`,  `taxonKey` and `scientificName` if not present:
+
+```{r create_idx_speciesKey}
+idx_species_taxon_name <- "idx_species_taxon_name"
+# get indexes on table
+query <- glue_sql(
+    "PRAGMA index_list({table_name})",
+    table_name = table_name,
+    .con = sqlite_occ
+)
+indexes_all <- dbGetQuery(sqlite_occ, query)
+
+# create index if not present
+if (!idx_species_taxon_name %in% indexes_all$name) {
+  query <- glue_sql(
+  "CREATE INDEX {`idx`} ON {table_name} ({`cols_idx`*})",
+  idx = idx_species_taxon_name,
+  table_name = table_name,
+  cols_idx = c("speciesKey", 
+               "taxonKey", 
+               "scientificName"),
+  .con = sqlite_occ
+  )
+  dbExecute(sqlite_occ, query)
+}
+```
+
+We get first all distinct taxa:
 
 ```{r get_distinct_taxa_in_occ_cube_species}
 query <- glue_sql(
@@ -139,7 +178,22 @@ occ_cube_species_taxa <-
   dbGetQuery(sqlite_occ, query)
 ```
 
-Some species have occurrences coming from multiple taxa:
+Taxa with rank higher than species whose occurrences we discarded:
+
+```{r taxa_higher_rank_than_species}
+occ_cube_species_taxa %>%
+  filter(speciesKey == 0)
+```
+
+We remove them as well:
+
+```{r remove_taxa_rank_higher_species}
+occ_cube_species_taxa <- 
+  occ_cube_species_taxa %>%
+  filter(speciesKey != 0)
+```
+
+Some species have occurrences coming from multiple taxa, synonyms and/or infraspecific taxa:
 
 ```{r show_multiple_taxonKey}
 occ_cube_species_taxa %>%
@@ -151,7 +205,7 @@ occ_cube_species_taxa %>%
   arrange(speciesKey, taxonKey)
 ```
 
-Some species have occurrences only from taxa linked to their infraspecific taxa or synonyms. In these cases `speciesKey` is not equal to `taxonKey`:
+Some species have occurrences only from taxa linked to their infraspecific taxa or synonyms. In these cases `speciesKey` is never equal to `taxonKey`:
 
 ```{r show_taxa_speciesKey_not_taxonKey}
 occ_cube_species_taxa %>%
@@ -216,21 +270,21 @@ taxa_species
 
 # Save aggregated data
 
-## Save aggregated occurrences and mapped taxa at national level
+## Save aggregated occurrence data
 
-### Save aggregated data
-
-Save the *occurrence cube* as tab separated text file:
+Save the *occurrence data cube* as tab separated text file:
 
 ```{r save_cube_belgium}
 occ_cube_species_filename <- paste0(paste("cube", countries, sep = "_"), ".tsv")
 write_tsv(occ_cube_species, 
-          here::here("data", "processed", occ_cube_species_filename),
+          here::here("data",
+                     "processed",
+                     occ_cube_species_filename),
           na = ""
 )
 ```
 
-### Save taxa
+## Save taxa
 
 Save the taxa as tab separated text file:
 
