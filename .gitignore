@@ -45,3 +45,7 @@ data/raw/*
 # Interim data: the big sqlite database and auxiliary text file
 data/interim/*.sqlite
 data/interim/*.tsv
+
+# The final data cubes are typically too big to be available on GitHub
+data/processed/cube_*.tsv
+!data/processed/cube_*_taxa_*.tsv
