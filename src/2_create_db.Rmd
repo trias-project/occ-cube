@@ -97,7 +97,7 @@ sqlite_path <- here::here("data", "interim", sqlite_file)
 And table name:
 
 ```{r define_table_name}
-table_name <- "occ_be_all"
+table_name <- "occ_all"
 ```
 
 ### Define storage class for each column
@@ -289,7 +289,7 @@ issue_condition
 New table name: `occ_be`
  
 ```{r new_table_name}
-table_name_subset <- "occ_be"
+table_name_subset <- "occ"
 ```
 
 We create the new table with selected columns and filtered data on `occurrenceStatus` and `issue`:

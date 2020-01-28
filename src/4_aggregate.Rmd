@@ -46,7 +46,7 @@ sqlite_path <- here::here("data", "interim", sqlite_file)
 Table name:
 
 ```{r define_table_name}
-table_name <- "occ_be"
+table_name <- "occ"
 ```
 
 Open connection to database:
