@@ -56,7 +56,7 @@ if (!file.exists(here::here("data", "raw", zip_filename))) {
 Unzip the occurrence text file from the download file:
 
 ```{r unzip_csv}
-occ_file <- paste(key, "occurrence.txt", sep = "_")
+occ_file <- paste0(paste(key, "occurrence", countries, sep = "_"), ".txt")
 occ_path <- here::here("data", "raw", occ_file)
 
 if (!file.exists(here::here("data", "raw", occ_file))) {
@@ -90,7 +90,8 @@ length(cols_occ_file)
 Define name and path of `.sqlite` file:
 
 ```{r sqlite_path}
-sqlite_file <- paste(key, "occurrence.sqlite", sep = "_")
+sqlite_file <- paste0(
+  paste(key, "occurrence", countries, sep = "_"), ".sqlite")
 sqlite_path <- here::here("data", "interim", sqlite_file)
 ```
 

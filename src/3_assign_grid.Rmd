@@ -42,7 +42,7 @@ countries <- c("BE")
 Name and path of `.sqlite` file:
 
 ```{r name_path}
-sqlite_file <- paste(key, "occurrence.sqlite", sep = "_")
+sqlite_file <- paste0(paste(key, "occurrence", countries, sep = "_"), ".sqlite")
 sqlite_path <- here::here("data", "interim", sqlite_file)
 ```
 
@@ -156,7 +156,11 @@ First, we create such file:
 temp_file_coords <- here::here(
   "data", 
   "interim", 
-  paste0(key, "_coordinates_and_uncertainty_epsg_4326.tsv")
+  paste0(paste(key, 
+               "coordinates_and_uncertainty_epsg_4326", 
+               countries, 
+               sep = "_"),
+         ".tsv")
 )
 col_names_geodata_df <- names(geodata_df)
 write_tsv(geodata_df, temp_file_coords, na = "")
