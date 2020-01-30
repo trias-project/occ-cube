@@ -287,7 +287,7 @@ issue_condition
 
 ## Create new table with filtered data
 
-New table name: `occ_be`
+New table name: `occ`
  
 ```{r new_table_name}
 table_name_subset <- "occ"
@@ -315,9 +315,9 @@ if (!table_name_subset %in% dbListTables(sqlite_occ)) {
 
 ## Overview and control filtered data table
 
-## Structure of `occ_be` table
+## Structure of `occ` table
 
-Check whether the table `occ_be` has been made:
+Check whether the table `occ` has been made:
 
 ```{r check_new_table}
 table_name_subset %in% dbListTables(sqlite_occ)
@@ -403,7 +403,7 @@ any(map_lgl(issues_to_discard,
             }))
 ```
 
-Overview of alll indexes present on `occ_be`:
+Overview of alll indexes present on `occ`:
 
 ```{r index_filtered_table}
 query <- glue_sql(
