@@ -34,9 +34,9 @@ library(RSQLite)        # To interact with SQlite databases
 
 ## Get CSV file from GBIF
 
-Download key returned in `1_download.Rmd` and country:
+Define key returned in `1_download.Rmd` and country:
 
-```{r }
+```{r define_key_countries}
 key <- "0000537-200127171203522"
 countries <- c("BE")
 ```
@@ -112,7 +112,7 @@ names(field_types) <- cols_occ_file
 
 The following columns should be of storage class `INTEGER`:
 
-1. `*Key`, e.g. `taxonKey`, `speciesKey`, but no `datasetKey`
+1. `*Key`, e.g. `taxonKey`, `speciesKey`, except `datasetKey`
 2. `*DayOfYear`: `startDayOfYear` and  `endDayOfYear`  
 3. `year`
 4. `month`

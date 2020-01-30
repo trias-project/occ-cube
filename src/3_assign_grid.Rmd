@@ -32,10 +32,16 @@ library(RSQLite)        # To interact with SQlite databases
 
 # Get geographic coordinates and coordinate uncertainty
 
+Define key returned in `1_download.Rmd` and country:
+
+```{r define_key_countries}
+key <- "0000537-200127171203522"
+countries <- c("BE")
+```
+
 Name and path of `.sqlite` file:
 
 ```{r name_path}
-key <- "0000537-200127171203522"
 sqlite_file <- paste(key, "occurrence.sqlite", sep = "_")
 sqlite_path <- here::here("data", "interim", sqlite_file)
 ```

@@ -29,7 +29,7 @@ library(rgbif)          # To use GBIF services
 library(glue)           # To write queries
 library(RSQLite)        # To interact with SQlite databases
 ```
-Country the occurrences we are analyzing come from:
+Countries the occurrences we are analyzing come from:
 
 ```{r country}
 countries <- c("BE")
