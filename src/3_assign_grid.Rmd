@@ -139,6 +139,22 @@ dbExecute(sqlite_occ, query)
 dbCommit(sqlite_occ)
 ```
 
+Check whether coordinate uncertainty is always present and is always other than 0:
+
+```{r get_geodata}
+query <- glue_sql("SELECT {`column`} FROM {table}",
+              table = table_name,
+              column = "coordinateUncertaintyInMeters",
+              .con = sqlite_occ
+)
+uncertainty_df <- 
+  dbGetQuery(sqlite_occ, query) %>%
+  as_tibble()
+uncertainty_df %>%
+  filter(is.na(coordinateUncertaintyInMeters) | 
+           coordinateUncertaintyInMeters == 0) %>%
+  count()
+```
 # Assign grid to occurrences
 
 We use the official grid of Belgium at 1x1km resolution as provided by EEA.
