@@ -29,7 +29,7 @@ library(rgbif)          # To use GBIF services
 library(glue)           # To write queries
 library(RSQLite)        # To interact with SQlite databases
 ```
-Country the occurrences we are analyzing come from:
+Countries the occurrences we are analyzing come from:
 
 ```{r country}
 countries <- c("BE")
@@ -38,15 +38,15 @@ countries <- c("BE")
 Name and path of `.sqlite` file:
 
 ```{r name_path}
-key <- "0030713-190918142434337"
-sqlite_file <- paste(key, "occurrence.sqlite", sep = "_")
+key <- "0000537-200127171203522"
+sqlite_file <- paste0(paste(key, "occurrence", countries, sep = "_"), ".sqlite")
 sqlite_path <- here::here("data", "interim", sqlite_file)
 ```
 
 Table name:
 
 ```{r define_table_name}
-table_name <- "occ_be"
+table_name <- "occ"
 ```
 
 Open connection to database:
@@ -274,8 +274,11 @@ taxa_species
 
 Save the *occurrence data cube* as tab separated text file:
 
-```{r save_cube_belgium}
-occ_cube_species_filename <- paste0(paste("cube", countries, sep = "_"), ".tsv")
+```{r save_cube}
+occ_cube_species_filename <- paste0(
+  paste("cube", countries, sep = "_"),
+  ".tsv"
+)
 write_tsv(occ_cube_species, 
           here::here("data",
                      "processed",
@@ -288,12 +291,15 @@ write_tsv(occ_cube_species,
 
 Save the taxa as tab separated text file:
 
-```{r save_cube_belgium_taxa}
-taxa_species_filename <- paste0(paste("cube", countries, "taxa", sep = "_"), ".tsv")
-write_tsv(taxa_species, 
-          here::here("data", "processed", occ_cube_species_taxa_filename),
-          na = ""
+```{r save_cube_taxa}
+taxa_species_filename <- paste0(
+  paste("cube", countries, "taxa", sep = "_"),
+  ".tsv"
 )
+write_tsv(taxa_species,
+          path = here::here("data",
+                            "processed",
+                            taxa_species_filename), na = "")
 ```
 
 Close connection:

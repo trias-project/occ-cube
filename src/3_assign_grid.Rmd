@@ -32,18 +32,24 @@ library(RSQLite)        # To interact with SQlite databases
 
 # Get geographic coordinates and coordinate uncertainty
 
+Define key returned in `1_download.Rmd` and country:
+
+```{r define_key_countries}
+key <- "0000537-200127171203522"
+countries <- c("BE")
+```
+
 Name and path of `.sqlite` file:
 
 ```{r name_path}
-key <- "0030713-190918142434337"
-sqlite_file <- paste(key, "occurrence.sqlite", sep = "_")
+sqlite_file <- paste0(paste(key, "occurrence", countries, sep = "_"), ".sqlite")
 sqlite_path <- here::here("data", "interim", sqlite_file)
 ```
 
 Table name:
 
 ```{r define_table_name}
-table_name <- "occ_be"
+table_name <- "occ"
 ```
 
 Open connection to database:
@@ -89,21 +95,22 @@ geodata_df %>%
   arrange(desc(n))
 ```
 
-Number of occurrences without coordinate uncertainty:
+Number of occurrences without coordinate uncertainty or set to zero:
 
 ```{r n_occs_without_uncertainty}
 geodata_df %>%
-  filter(is.na(coordinateUncertaintyInMeters)) %>%
+  filter(is.na(coordinateUncertaintyInMeters) | 
+           coordinateUncertaintyInMeters == 0) %>%
   count()
 ```
 
-We assign 1000 meters to occurrences without uncertainty:
+We assign 1000 meters to these occurrences:
 
 ```{r assign_fix_uncertainty}
 geodata_df <- 
   geodata_df %>%
   mutate(coordinateUncertaintyInMeters = if_else(
-    is.na(coordinateUncertaintyInMeters),
+    is.na(coordinateUncertaintyInMeters) | coordinateUncertaintyInMeters == 0,
     1000.0,
     coordinateUncertaintyInMeters
   ))
@@ -122,7 +129,8 @@ dbExecute(sqlite_occ, query)
 # Start transaction
 dbBegin(sqlite_occ)
 query <- glue_sql(
-            "UPDATE {table} SET {`column`} = 1000 WHERE {`column`} = ''",
+            "UPDATE {table} SET {`column`} = 1000 WHERE 
+            {`column`} = '' OR {`column`} = '0.0'",
             table = table_name,
             column = "coordinateUncertaintyInMeters",
             .con = sqlite_occ)
@@ -131,6 +139,22 @@ dbExecute(sqlite_occ, query)
 dbCommit(sqlite_occ)
 ```
 
+Check whether coordinate uncertainty is always present and is always other than 0:
+
+```{r get_geodata}
+query <- glue_sql("SELECT {`column`} FROM {table}",
+              table = table_name,
+              column = "coordinateUncertaintyInMeters",
+              .con = sqlite_occ
+)
+uncertainty_df <- 
+  dbGetQuery(sqlite_occ, query) %>%
+  as_tibble()
+uncertainty_df %>%
+  filter(is.na(coordinateUncertaintyInMeters) | 
+           coordinateUncertaintyInMeters == 0) %>%
+  count()
+```
 # Assign grid to occurrences
 
 We use the official grid of Belgium at 1x1km resolution as provided by EEA.
@@ -150,7 +174,11 @@ First, we create such file:
 temp_file_coords <- here::here(
   "data", 
   "interim", 
-  paste0(key, "_coordinates_and_uncertainty_epsg_4326.tsv")
+  paste0(paste(key, 
+               "coordinates_and_uncertainty_epsg_4326", 
+               countries, 
+               sep = "_"),
+         ".tsv")
 )
 col_names_geodata_df <- names(geodata_df)
 write_tsv(geodata_df, temp_file_coords, na = "")

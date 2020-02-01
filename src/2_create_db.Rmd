@@ -34,10 +34,10 @@ library(RSQLite)        # To interact with SQlite databases
 
 ## Get CSV file from GBIF
 
-Download key returned in `1_download.Rmd` and country:
+Define key returned in `1_download.Rmd` and country:
 
-```{r }
-key <- "0030713-190918142434337"
+```{r define_key_countries}
+key <- "0000537-200127171203522"
 countries <- c("BE")
 ```
 
@@ -56,7 +56,7 @@ if (!file.exists(here::here("data", "raw", zip_filename))) {
 Unzip the occurrence text file from the download file:
 
 ```{r unzip_csv}
-occ_file <- paste(key, "occurrence.txt", sep = "_")
+occ_file <- paste0(paste(key, "occurrence", countries, sep = "_"), ".txt")
 occ_path <- here::here("data", "raw", occ_file)
 
 if (!file.exists(here::here("data", "raw", occ_file))) {
@@ -90,14 +90,15 @@ length(cols_occ_file)
 Define name and path of `.sqlite` file:
 
 ```{r sqlite_path}
-sqlite_file <- paste(key, "occurrence.sqlite", sep = "_")
+sqlite_file <- paste0(
+  paste(key, "occurrence", countries, sep = "_"), ".sqlite")
 sqlite_path <- here::here("data", "interim", sqlite_file)
 ```
 
 And table name:
 
 ```{r define_table_name}
-table_name <- "occ_be_all"
+table_name <- "occ_all"
 ```
 
 ### Define storage class for each column
@@ -112,7 +113,7 @@ names(field_types) <- cols_occ_file
 
 The following columns should be of storage class `INTEGER`:
 
-1. `*Key`, e.g. `taxonKey`, `speciesKey`, but no `datasetKey`
+1. `*Key`, e.g. `taxonKey`, `speciesKey`, except `datasetKey`
 2. `*DayOfYear`: `startDayOfYear` and  `endDayOfYear`  
 3. `year`
 4. `month`
@@ -286,10 +287,10 @@ issue_condition
 
 ## Create new table with filtered data
 
-New table name: `occ_be`
+New table name: `occ`
  
 ```{r new_table_name}
-table_name_subset <- "occ_be"
+table_name_subset <- "occ"
 ```
 
 We create the new table with selected columns and filtered data on `occurrenceStatus` and `issue`:
@@ -314,9 +315,9 @@ if (!table_name_subset %in% dbListTables(sqlite_occ)) {
 
 ## Overview and control filtered data table
 
-## Structure of `occ_be` table
+## Structure of `occ` table
 
-Check whether the table `occ_be` has been made:
+Check whether the table `occ` has been made:
 
 ```{r check_new_table}
 table_name_subset %in% dbListTables(sqlite_occ)
@@ -402,7 +403,7 @@ any(map_lgl(issues_to_discard,
             }))
 ```
 
-Overview of alll indexes present on `occ_be`:
+Overview of alll indexes present on `occ`:
 
 ```{r index_filtered_table}
 query <- glue_sql(
