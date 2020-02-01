@@ -274,7 +274,7 @@ taxa_species
 
 Save the *occurrence data cube* as tab separated text file:
 
-```{r save_cube_belgium}
+```{r save_cube}
 occ_cube_species_filename <- paste0(
   paste("cube", countries, sep = "_"),
   ".tsv"
@@ -291,7 +291,7 @@ write_tsv(occ_cube_species,
 
 Save the taxa as tab separated text file:
 
-```{r save_cube_belgium_taxa}
+```{r save_cube_taxa}
 taxa_species_filename <- paste0(
   paste("cube", countries, "taxa", sep = "_"),
   ".tsv"
