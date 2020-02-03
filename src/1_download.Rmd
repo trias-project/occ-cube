@@ -91,7 +91,7 @@ gbif_download_key <- "0002883-200127171203522"
 #   pred_in("basisOfRecord", basis_of_record),
 #   pred_gte("year", year_begin),
 #   pred_lte("year", year_end),
-#   pred("hasCoordinate", TRUE),
+#   pred("hasCoordinate", hasCoordinate),
 #   user = rstudioapi::askForPassword("GBIF username"),
 #   pwd = rstudioapi::askForPassword("GBIF password"),
 #   email = rstudioapi::askForPassword("Email address for notification")
