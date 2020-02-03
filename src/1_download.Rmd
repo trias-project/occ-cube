@@ -37,7 +37,7 @@ library(lubridate)      # To work with dates
 We define country we want to get data cube:
 
 ```{r define_countries}
-countries <- c("BE")
+countries <- c("IT")
 ```
 
 ## Basis of record
