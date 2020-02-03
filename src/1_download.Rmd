@@ -87,11 +87,11 @@ Trigger download:
 
 # Trigger new download (commented by default)
 # gbif_download_key <- occ_download(
-#   paste0("country = ", paste(countries, collapse = ",")),
-#   paste0("basisOfRecord = ", paste(basis_of_record, collapse = ",")),
-#   paste0("year >= ", year_begin),
-#   paste0("year <= ", year_end),
-#   paste0("hasCoordinate = ", hasCoordinate),
+#   pred_in("country", countries),
+#   pred_in("basisOfRecord", basis_of_record),
+#   pred_gte("year", year_begin),
+#   pred_lte("year", year_end),
+#   pred("hasCoordinate", TRUE),
 #   user = rstudioapi::askForPassword("GBIF username"),
 #   pwd = rstudioapi::askForPassword("GBIF password"),
 #   email = rstudioapi::askForPassword("Email address for notification")
