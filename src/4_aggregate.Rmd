@@ -29,16 +29,17 @@ library(rgbif)          # To use GBIF services
 library(glue)           # To write queries
 library(RSQLite)        # To interact with SQlite databases
 ```
-Countries the occurrences we are analyzing come from:
 
-```{r country}
-countries <- c("BE")
+Define key returned in `1_download.Rmd` and country:
+
+```{r define_key_countries}
+key <- "0002883-200127171203522"
+countries <- c("IT")
 ```
 
 Name and path of `.sqlite` file:
 
 ```{r name_path}
-key <- "0000537-200127171203522"
 sqlite_file <- paste0(paste(key, "occurrence", countries, sep = "_"), ".sqlite")
 sqlite_path <- here::here("data", "interim", sqlite_file)
 ```

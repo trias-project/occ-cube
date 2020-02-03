@@ -37,8 +37,8 @@ library(RSQLite)        # To interact with SQlite databases
 Define key returned in `1_download.Rmd` and country:
 
 ```{r define_key_countries}
-key <- "0000537-200127171203522"
-countries <- c("BE")
+key <- "0002883-200127171203522"
+countries <- c("IT")
 ```
 
 Download the occurrences from GBIF:
@@ -280,7 +280,7 @@ issues_to_discard <- paste0("\'%", issues_to_discard, "%\'")
 
 We create the subquery for filtering on issue conditions:
 
-```{r}
+```{r chr_with_issue_condition}
 issue_condition <- paste("issue NOT LIKE", issues_to_discard, collapse = " AND ")
 issue_condition
 ```
@@ -325,7 +325,7 @@ table_name_subset %in% dbListTables(sqlite_occ)
 
 Columns present:
 
-```{r}
+```{r check_cols_occ_table}
 dbListFields(sqlite_occ, name = table_name_subset)
 ```
 
