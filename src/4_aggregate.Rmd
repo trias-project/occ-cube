@@ -273,14 +273,14 @@ taxa_species
 
 ## Save aggregated occurrence data
 
-Save the *occurrence data cube* as tab separated text file:
+Save the *occurrence data cube* as comma separated text file:
 
 ```{r save_cube}
 occ_cube_species_filename <- paste0(
-  paste("cube", countries, sep = "_"),
-  ".tsv"
+  paste(countries, "species", "cube", sep = "_"),
+  ".csv"
 )
-write_tsv(occ_cube_species, 
+write_csv(occ_cube_species, 
           here::here("data",
                      "processed",
                      occ_cube_species_filename),
@@ -290,14 +290,14 @@ write_tsv(occ_cube_species,
 
 ## Save taxa
 
-Save the taxa as tab separated text file:
+Save the taxa as comma separated text file:
 
 ```{r save_cube_taxa}
 taxa_species_filename <- paste0(
-  paste("cube", countries, "taxa", sep = "_"),
-  ".tsv"
+  paste(countries, "species", "info", sep = "_"),
+  ".csv"
 )
-write_tsv(taxa_species,
+write_csv(taxa_species,
           path = here::here("data",
                             "processed",
                             taxa_species_filename), na = "")
