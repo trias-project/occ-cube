@@ -300,7 +300,10 @@ taxa_species_filename <- paste0(
 write_csv(taxa_species,
           path = here::here("data",
                             "processed",
-                            taxa_species_filename), na = "")
+                            taxa_species_filename),
+          na = "", 
+          quote_escape = FALSE
+)
 ```
 
 Close connection:
