@@ -2,7 +2,7 @@
 
 ## Rationale
 
-This repository contains the functionality to process occurrence data and create aggregated **occurrence data cubes** at species level for some European countries. An occurrence data cube is a multi-dimensional array of values. In our context we have three dimensions, ``N = 3``:
+This repository contains the functionality to process occurrence data and create aggregated **occurrence data cubes** at species level for European countries. An occurrence data cube is a multi-dimensional array of values. In our context we have three dimensions, ``N = 3``:
 
 1. taxonomic (taxon)
 2. temporal (year)
@@ -52,7 +52,7 @@ taxonKey | scientificName | numberOfOccurrences | taxonRank | taxonomicStatus
 
 See https://doi.org/10.15468/dl.rej1cz for more details. Note: the table above is just an example and can be outdated.
 
-By aggregating we would loose this information, so we provide aside the cubes, e.g. `cube_belgium.tsv`, a kind of taxonomic compendiums, e.g. `cube_belgium_taxa.tsv`. They include for each taxa in the cube all the synonyms or infraspecies whose occurrences contribute to the total count. Differently from data cube of alien species, these data cubes are completely built upon the taxonomic relationships of [GBIF Backbone Taxonomy](https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c). Both data cubes and taxonomic compendiums are saved in `data/processed`.
+By aggregating we would loose this information, so we provide aside the cubes, e.g. `be_species_cube.csv`, a kind of taxonomic compendiums, e.g. `be_species_info.csv`. They include for each taxa in the cube all the synonyms or infraspecies whose occurrences contribute to the total count. Differently from data cube of alien species, these data cubes are completely built upon the taxonomic relationships of [GBIF Backbone Taxonomy](https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c). Both data cubes and taxonomic compendiums are saved in `data/processed`.
 
 For example, _Aedes japonicus (Theobald, 1901)_ is an accepted species present in the Belgian cube: based on the information stored in `occ_belgium_taxa.tsv`, its occurrences include occurrences linked to the following taxa:
 1. [Aedes japonicus (Theobald, 1901)](https://www.gbif.org/species/1652212)
@@ -75,33 +75,32 @@ The repository structure is based on [Cookiecutter Data Science](http://drivenda
 │   └── processed        : occurrence data cubes and related taxa informations GENERATED
 │
 └── src
-    ├── belgium
-        ├── 1_download.Rmd    : Script to trigger a download of occurrences in Belgium
-        ├── 2_create_db.Rmd   : Script to genereate a sqlite file and perform basic filtering
-        ├── 3_assign_grid.Rmd : Script to assign cell code to occurrences
-        ├── 4_aggregate.Rmd   : Script to aggregate data and make the Belgian data cube
+    ├── 1_download.Rmd    : Script to trigger a download of occurrences in a country
+    ├── 2_create_db.Rmd   : Script to genereate a sqlite file and perform basic filtering
+    ├── 3_assign_grid.Rmd : Script to assign cell code to occurrences
+    ├── 4_aggregate.Rmd   : Script to aggregate data and make the Belgian data cube
 ```
 
 ## Installation
 
 Clone this repository to your computer and open the RStudio project file,  `occ-processing.Rproj`.
 
-### Generate occurrence data cube for Belgium
+### Generate occurrence data cube
 
-You can generate the Belgian occurrence data cube by running the [R Markdown files](https://rmarkdown.rstudio.com/) in `src/belgium` following the order shown here below:
+You can generate a national occurrence data cube by running the [R Markdown files](https://rmarkdown.rstudio.com/) in `src` following the order shown here below:
 
 1. `1_download.Rmd`: trigger a GBIF download and add it to the list of triggered downloads
 2. `2_create_db.Rmd`: create a sqlite database and perform basic data cleaning
 3. `3_assign_grid.Rmd`: assign geographic cell code to occurrence data
 4. `4_aggregate.Rmd`: aggregate occurrences per taxon, year and cell code, the _Belgian occurrence data cube_
 
-In the aggregation step, we also create a data cube at class level. The data cubes are authomatically generated in  folder `/data/processed/`.
+The data cubes are authomatically generated in  folder `/data/processed/`.
 
 Install any required packages, first.
 
 ## Contributors
 
-[List of contributors](https://github.com/trias-project/unified-checklist/contributors)
+[List of contributors](https://github.com/trias-project/occ-cube/contributors)
 
 ## License
 
