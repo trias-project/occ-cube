@@ -46,7 +46,8 @@ data/raw/*
 data/interim/*.sqlite
 data/interim/*.tsv
 
-# The final data cubes are typically too big to be available on GitHub
-data/processed/cube_*.tsv
-!data/processed/cube_*_taxa_*.tsv
+# The final data cubes are typically too big to be available on GitHub.
+data/processed/*_cube.csv
+# We remove also the correspondent taxonomic compendiums
+data/processed/*_info.csv
 .Rproj.user
