@@ -277,7 +277,7 @@ Save the *occurrence data cube* as comma separated text file:
 
 ```{r save_cube}
 occ_cube_species_filename <- paste0(
-  paste(countries, "species", "cube", sep = "_"),
+  paste(str_to_lower(countries), "species", "cube", sep = "_"),
   ".csv"
 )
 write_csv(occ_cube_species, 
@@ -294,7 +294,7 @@ Save the taxa as comma separated text file:
 
 ```{r save_cube_taxa}
 taxa_species_filename <- paste0(
-  paste(countries, "species", "info", sep = "_"),
+  paste(str_to_lower(countries), "species", "info", sep = "_"),
   ".csv"
 )
 write_csv(taxa_species,
