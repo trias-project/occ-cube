@@ -37,7 +37,7 @@ library(RSQLite)        # To interact with SQlite databases
 Define key returned in `1_download.Rmd` and country:
 
 ```{r define_key_countries}
-key <- "0002883-200127171203522"
+key <- "0003160-200613084148143"
 countries <- c("IT")
 ```
 
@@ -247,10 +247,21 @@ occurrenceStatus_to_discard <- c(
 )
 ```
 
-We create an index based on these two columns if not already present:
+We won't take into account unverified observations neither:
+
+```{r identificationVerificationStatus}
+identificationVerificationStatus_to_discard <- c(
+  "unverified",
+  "unvalidated",
+  "not able to validate",
+  "control could not be conclusive due to insufficient knowledge"
+)
+```
+
+We create an index based on these three columns if not already present:
 
 ```{r create_idx_occStatus_issue}
-idx_occStatus_issue <- "idx_occStatus_issue"
+idx_occStatus_issue <- "idx_verifStatus_occStatus_issue"
 # get indexes on table
 query <- glue_sql(
     "PRAGMA index_list({table_name})",
@@ -265,7 +276,9 @@ if (!idx_occStatus_issue %in% indexes_all$name) {
   "CREATE INDEX {`idx`} ON {table_name} ({`cols_idx`*})",
   idx = idx_occStatus_issue,
   table_name = table_name,
-  cols_idx = c("occurrenceStatus", "issue"),
+  cols_idx = c("identificationVerificationStatus",
+               "occurrenceStatus",
+               "issue"),
   .con = sqlite_occ
   )
   dbExecute(sqlite_occ, query)
