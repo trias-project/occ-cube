@@ -194,8 +194,7 @@ cols_to_use <- c(
   "lastInterpreted", "hasCoordinate", "hasGeospatialIssues", "decimalLatitude", "decimalLongitude", "coordinateUncertaintyInMeters",
   "coordinatePrecision", "pointRadiusSpatialFit", "verbatimCoordinateSystem", 
   "verbatimSRS", "eventDate", "startDayOfYear", "endDayOfYear", "year", "month",
-  "day", "verbatimEventDate", "samplingProtocol", "samplingEffort", "issue",
-  "taxonKey", "acceptedTaxonKey", "kingdomKey", "phylumKey", "classKey", 
+  "day", "verbatimEventDate", "samplingProtocol", "samplingEffort", "issue", "identificationVerificationStatus", "taxonKey", "acceptedTaxonKey", "kingdomKey", "phylumKey", "classKey", 
   "orderKey", "familyKey", "genusKey", "subgenusKey", "speciesKey", "species"
 )
 ```
@@ -315,10 +314,11 @@ if (!table_name_subset %in% dbListTables(sqlite_occ)) {
                fields = field_types_subset)
   query <- glue_sql(
   "INSERT INTO {small_table} SELECT {`some_cols`*} FROM {big_table} WHERE 
-  occurrenceStatus NOT IN ({bad_status*}) AND ", issue_condition, 
+  LOWER(identificationVerificationStatus) NOT IN ({unverified*}) AND LOWER(occurrenceStatus) NOT IN ({bad_status*}) AND ", issue_condition, 
   small_table = table_name_subset,
   some_cols = names(field_types_subset),
   big_table = table_name,
+  unverified = identificationVerificationStatus_to_discard,
   bad_status = occurrenceStatus_to_discard,
   .con = sqlite_occ
   )
@@ -416,7 +416,35 @@ any(map_lgl(issues_to_discard,
             }))
 ```
 
-Overview of alll indexes present on `occ`:
+We create an index on `identificationVerificationStatus`:
+
+```{r idx_identificationVerificationStatus}
+idx_issue <- "idx_identificationVerificationStatus"
+if (!idx_issue %in% indexes$name) {
+  query <- glue_sql(
+    "CREATE INDEX {idx} ON {table_name} ({cols_idx})",
+    idx = idx_issue,
+    table_name = table_name_subset,
+    cols_idx = c("identificationVerificationStatus"),
+    .con = sqlite_occ
+  )
+  dbExecute(sqlite_occ, query)
+}
+```
+
+Identification verification status left in the filtered data:
+
+```{r check_identificationVerificationStatus_values}
+query <- glue_sql(
+    "SELECT DISTINCT identificationVerificationStatus FROM {table}",
+    table = table_name_subset,
+    .con = sqlite_occ
+  )
+status_verification_left <- dbGetQuery(sqlite_occ, query)
+status_verification_left
+```
+
+Overview of all indexes present on `occ`:
 
 ```{r index_filtered_table}
 query <- glue_sql(
