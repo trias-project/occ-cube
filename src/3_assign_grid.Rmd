@@ -186,7 +186,13 @@ write_tsv(geodata_df, temp_file_coords, na = "")
 remove(geodata_df)
 ```
 
-We define the function to apply to each chunk:
+Set random number generator seed (this helps reproducibility). We use the unique identifier of the [Zenodo dataset's DOI](https://doi.org/10.5281/zenodo.3637911) this data will be published to:
+
+```{r set_seed}
+set.seed(3637911)
+```
+
+We define the function `reproject_assign()` to apply to each chunk:
 
 ```{r transform_to_3035_assign_pts_in_circle}
 reproject_assign <- function(df, pos){
