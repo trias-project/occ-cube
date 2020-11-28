@@ -37,7 +37,7 @@ library(lubridate)      # To work with dates
 We define country we want to get data cube:
 
 ```{r define_countries}
-countries <- c("SI")
+countries <- c("LT")
 ```
 
 ## Basis of record
@@ -83,15 +83,15 @@ Trigger download:
 
 ```{r trigger_gbif_download}
 # Reuse existing download (comment to trigger new download)
-gbif_download_key <- "0123848-200613084148143"
+# gbif_download_key <- "0123848-200613084148143"
 
 # Trigger new download (commented by default)
-# gbif_download_key <- occ_download(
-#   pred_in("country", countries),
-#   pred_in("basisOfRecord", basis_of_record),
-#   pred_gte("year", year_begin),
-#   pred_lte("year", year_end),
-#   pred("hasCoordinate", hasCoordinate),
+gbif_download_key <- occ_download(
+  pred_in("country", countries),
+  pred_in("basisOfRecord", basis_of_record),
+  pred_gte("year", year_begin),
+  pred_lte("year", year_end),
+  pred("hasCoordinate", hasCoordinate))
 #   user = rstudioapi::askForPassword("GBIF username"),
 #   pwd = rstudioapi::askForPassword("GBIF password"),
 #   email = rstudioapi::askForPassword("Email address for notification")
