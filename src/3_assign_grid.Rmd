@@ -35,8 +35,8 @@ library(RSQLite)        # To interact with SQlite databases
 Define key returned in `1_download.Rmd` and country:
 
 ```{r define_key_countries}
-key <- "0123848-200613084148143"
-countries <- c("SI")
+key <- "0124676-200613084148143"
+countries <- c("LT")
 ```
 
 Name and path of `.sqlite` file:
