@@ -444,6 +444,19 @@ status_verification_left <- dbGetQuery(sqlite_occ, query)
 status_verification_left
 ```
 
+Number of occurrences left:
+
+```{r n_occs}
+query <- glue_sql(
+    "SELECT COUNT() FROM {table}",
+    table = table_name_subset,
+    .con = sqlite_occ
+  )
+n_occs <- dbGetQuery(sqlite_occ, query)
+n_occs <- n_occs$`COUNT()`
+n_occs
+```
+
 Overview of all indexes present on `occ`:
 
 ```{r index_filtered_table}
