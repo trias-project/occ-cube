@@ -59,6 +59,15 @@ For example, _Aedes japonicus (Theobald, 1901)_ is an accepted species present i
 2. [Ochlerotatus japonicus (Theobald, 1901)](https://www.gbif.org/species/4519733)
 3. [Aedes japonicus subsp. japonicus](https://www.gbif.org/species/7346173)
 
+We provide the occurrence cube and correspondent taxonomic compendium of the following European countries:
+
+country | countryCode
+--- | ---
+Belgium | BE
+Italy | IT
+Slovenia | SI
+Lithuania | LT
+
 ## Repo structure
 
 The repository structure is based on [Cookiecutter Data Science](http://drivendata.github.io/cookiecutter-data-science/). Files and directories indicated with `GENERATED` should not be edited manually.
