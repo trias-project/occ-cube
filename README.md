@@ -98,10 +98,10 @@ Clone this repository to your computer and open the RStudio project file,  `occ-
 
 You can generate a national occurrence data cube by running the [R Markdown files](https://rmarkdown.rstudio.com/) in `src` following the order shown here below:
 
-1. `1_download.Rmd`: trigger a GBIF download and add it to the list of triggered downloads
+1. `1_download.Rmd`: trigger a GBIF download for a specific country and add it to the list of triggered downloads
 2. `2_create_db.Rmd`: create a sqlite database and perform basic data cleaning
 3. `3_assign_grid.Rmd`: assign geographic cell code to occurrence data
-4. `4_aggregate.Rmd`: aggregate occurrences per taxon, year and cell code, the _Belgian occurrence data cube_
+4. `4_aggregate.Rmd`: aggregate occurrences per taxon, year and cell code, the _national occurrence data cube_
 
 The data cubes are authomatically generated in  folder `/data/processed/`.
 
