@@ -35,8 +35,8 @@ library(RSQLite)        # To interact with SQlite databases
 Define key returned in `1_download.Rmd` and country:
 
 ```{r define_key_countries}
-key <- "0002883-200127171203522"
-countries <- c("IT")
+key <- "0003154-200613084148143"
+countries <- c("BE")
 ```
 
 Name and path of `.sqlite` file:
@@ -186,7 +186,13 @@ write_tsv(geodata_df, temp_file_coords, na = "")
 remove(geodata_df)
 ```
 
-We define the function to apply to each chunk:
+Set random number generator seed (this helps reproducibility). We use the unique identifier of the [Zenodo dataset's DOI](https://doi.org/10.5281/zenodo.3637911) which the occurrence cube will be published to:
+
+```{r set_seed}
+set.seed(3637911)
+```
+
+We define the function `reproject_assign()` to apply to each chunk:
 
 ```{r transform_to_3035_assign_pts_in_circle}
 reproject_assign <- function(df, pos){
@@ -255,7 +261,7 @@ file.remove(temp_file_coords)
 
 ## Add grid cell code to sqlite file
 
-We can now add the column `eea_cell_code` to the table `occ_be` of sqlite file. We first create the new column `eaa_cell_code` in the table:
+We can now add the column `eea_cell_code` to the table `occ` of sqlite file. We first create the new column `eaa_cell_code` in the table:
 
 ```{r add_eaa_cellcode_to_sqlite}
 new_col <- "eea_cell_code"

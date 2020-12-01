@@ -50,14 +50,23 @@ taxonKey | scientificName | numberOfOccurrences | taxonRank | taxonomicStatus
 8361333 | Fallopia compacta (Hook.fil.) G.H.Loos & P.Keil | 24 | SPECIES | SYNONYM
 7291673 | Polygonum reynoutria (Houtt.) Makino | 3 | SPECIES | SYNONYM
 
-See https://doi.org/10.15468/dl.rej1cz for more details. Note: the table above is just an example and can be outdated.
+Table based on this [GBIF download](https://doi.org/10.15468/dl.rej1cz).
 
-By aggregating we would loose this information, so we provide aside the cubes, e.g. `be_species_cube.csv`, a kind of taxonomic compendiums, e.g. `be_species_info.csv`. They include for each taxa in the cube all the synonyms or infraspecies whose occurrences contribute to the total count. Differently from data cube of alien species, these data cubes are completely built upon the taxonomic relationships of [GBIF Backbone Taxonomy](https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c). Both data cubes and taxonomic compendiums are saved in `data/processed`.
+By aggregating we would loose this information, so we provide aside the cubes, e.g. `be_species_cube.csv` for Belgium, a kind of taxonomic compendiums, e.g. `be_species_info.csv`. They include for each taxa in the cube all the synonyms or infraspecies whose occurrences contribute to the total count. Differently from data cube of alien species, these data cubes are completely built upon the taxonomic relationships of [GBIF Backbone Taxonomy](https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c). Both data cubes and taxonomic compendiums are saved in `data/processed`.
 
 For example, _Aedes japonicus (Theobald, 1901)_ is an accepted species present in the Belgian cube: based on the information stored in `occ_belgium_taxa.tsv`, its occurrences include occurrences linked to the following taxa:
 1. [Aedes japonicus (Theobald, 1901)](https://www.gbif.org/species/1652212)
 2. [Ochlerotatus japonicus (Theobald, 1901)](https://www.gbif.org/species/4519733)
 3. [Aedes japonicus subsp. japonicus](https://www.gbif.org/species/7346173)
+
+We provide the occurrence cube and correspondent taxonomic compendium of the following European countries:
+
+country | countryCode
+--- | ---
+Belgium | BE
+Italy | IT
+Slovenia | SI
+Lithuania | LT
 
 ## Repo structure
 
@@ -89,14 +98,14 @@ Clone this repository to your computer and open the RStudio project file,  `occ-
 
 You can generate a national occurrence data cube by running the [R Markdown files](https://rmarkdown.rstudio.com/) in `src` following the order shown here below:
 
-1. `1_download.Rmd`: trigger a GBIF download and add it to the list of triggered downloads
+1. `1_download.Rmd`: trigger a GBIF download for a specific country and add it to the list of triggered downloads
 2. `2_create_db.Rmd`: create a sqlite database and perform basic data cleaning
 3. `3_assign_grid.Rmd`: assign geographic cell code to occurrence data
-4. `4_aggregate.Rmd`: aggregate occurrences per taxon, year and cell code, the _Belgian occurrence data cube_
+4. `4_aggregate.Rmd`: aggregate occurrences per taxon, year and cell code, the _national occurrence data cube_
 
 The data cubes are authomatically generated in  folder `/data/processed/`.
 
-Install any required packages, first.
+Install any required package, first.
 
 ## Contributors
 
