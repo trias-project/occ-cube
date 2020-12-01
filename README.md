@@ -50,9 +50,9 @@ taxonKey | scientificName | numberOfOccurrences | taxonRank | taxonomicStatus
 8361333 | Fallopia compacta (Hook.fil.) G.H.Loos & P.Keil | 24 | SPECIES | SYNONYM
 7291673 | Polygonum reynoutria (Houtt.) Makino | 3 | SPECIES | SYNONYM
 
-See https://doi.org/10.15468/dl.rej1cz for more details. Note: the table above is just an example and can be outdated.
+Table based on this [GBIF download](https://doi.org/10.15468/dl.rej1cz).
 
-By aggregating we would loose this information, so we provide aside the cubes, e.g. `be_species_cube.csv`, a kind of taxonomic compendiums, e.g. `be_species_info.csv`. They include for each taxa in the cube all the synonyms or infraspecies whose occurrences contribute to the total count. Differently from data cube of alien species, these data cubes are completely built upon the taxonomic relationships of [GBIF Backbone Taxonomy](https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c). Both data cubes and taxonomic compendiums are saved in `data/processed`.
+By aggregating we would loose this information, so we provide aside the cubes, e.g. `be_species_cube.csv` for Belgium, a kind of taxonomic compendiums, e.g. `be_species_info.csv`. They include for each taxa in the cube all the synonyms or infraspecies whose occurrences contribute to the total count. Differently from data cube of alien species, these data cubes are completely built upon the taxonomic relationships of [GBIF Backbone Taxonomy](https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c). Both data cubes and taxonomic compendiums are saved in `data/processed`.
 
 For example, _Aedes japonicus (Theobald, 1901)_ is an accepted species present in the Belgian cube: based on the information stored in `occ_belgium_taxa.tsv`, its occurrences include occurrences linked to the following taxa:
 1. [Aedes japonicus (Theobald, 1901)](https://www.gbif.org/species/1652212)
@@ -105,7 +105,7 @@ You can generate a national occurrence data cube by running the [R Markdown file
 
 The data cubes are authomatically generated in  folder `/data/processed/`.
 
-Install any required packages, first.
+Install any required package, first.
 
 ## Contributors
 
