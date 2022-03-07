@@ -305,11 +305,11 @@ taxa_species_filename <- paste0(
   ".csv"
 )
 write_csv(taxa_species,
-          path = here::here("data",
+          file = here::here("data",
                             "processed",
                             taxa_species_filename),
           na = "", 
-          quote_escape = FALSE
+          escape = "none"
 )
 ```
 
