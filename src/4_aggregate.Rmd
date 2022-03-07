@@ -106,8 +106,8 @@ occ_cube_species <-
   dbGetQuery(sqlite_occ, query) %>%
   rename(
     n = "COUNT(_ROWID_)",
-    min_coord_uncertainty = "MIN(`coordinateUncertaintyInMeters`)"
-)
+    min_coord_uncertainty = "MIN(`coordinateUncertaintyInMeters`)") %>%
+  mutate(speciesKey = as.numeric(speciesKey))
 ```
 
 Preview:
@@ -120,7 +120,7 @@ Number of occurrences linked to taxa with higher rank than species:
 
 ```{r occs_higher_rank_than_species}
 occ_cube_species %>%
-  filter(speciesKey == 0) %>%
+  filter(speciesKey == 0 | is.na(speciesKey)) %>%
   select(n) %>%
   colSums()
 ```
@@ -130,7 +130,7 @@ We will discard them:
 ```{r remove_occs_with_higher_rank}
 occ_cube_species <-
   occ_cube_species %>%
-  filter(speciesKey != 0)
+  filter(speciesKey != 0 & !is.na(speciesKey))
 ```
 
 ## Map taxa
@@ -227,6 +227,7 @@ occ_cube_species_taxa %>%
   arrange(speciesKey, taxonKey)
 ```
 
+We create `taxa_species` by adding the taxonomic rank, `SPECIES`, and the taxonomic status of the species, one of `ACCEPTED` or `DOUBTFUL`, and create a column called `include` which contains all taxa whose occurrences are linked to the species:
 
 ```{r make_taxa_species}
 taxa_species <- 
