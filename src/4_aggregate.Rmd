@@ -62,7 +62,7 @@ sqlite_occ <- dbConnect(SQLite(), dbname = sqlite_path)
 
 Species, synonyms of that species and infraspecific taxa of that species all share the same `speciesKey`.
 
-For speeding up the aggregation, we create an index on  `year`,  `eea_cell_code` and `speciesKey` if not present:
+For speeding up the aggregation, we create an index on `year`, `eea_cell_code` and `speciesKey` if not present:
 
 ```{r create_idx_speciesKey}
 idx_species_year_cell <- "idx_species_year_cell"
@@ -135,9 +135,9 @@ occ_cube_species <-
 
 ## Map taxa
 
-Grouping by `speciesKey`, we loose informations about which taxa share the same  `speciesKey`. This information could be sometimes helpful. We extract it in a separate data.frame, `taxa_species`.
+Grouping by `speciesKey`, we loose informations about which taxa share the same `speciesKey`. This information could be sometimes helpful. We extract it in a separate data.frame, `taxa_species`.
 
-For speeding up the extraction, we create an index on  `speciesKey`,  `taxonKey` and `scientificName` if not present:
+For speeding up the extraction, we create an index on `speciesKey`, `taxonKey` and `scientificName` if not present:
 
 ```{r create_idx_speciesKey}
 idx_species_taxon_name <- "idx_species_taxon_name"
@@ -227,7 +227,6 @@ occ_cube_species_taxa %>%
   arrange(speciesKey, taxonKey)
 ```
 
-We create `taxa_species` by adding the taxonomic rank, `SPECIES`, and the taxonomic status of the species, one of `ACCEPTED` or  `DOUBTFUL`, and create a column called `include` which contains all taxa whose occurrences are linked to the species:
 
 ```{r make_taxa_species}
 taxa_species <- 
