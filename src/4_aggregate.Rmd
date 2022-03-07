@@ -249,7 +249,7 @@ taxa_species <-
   reduce(full_join) %>%
 
   # select columns of interest
-  select(speciesKey, scientificName, rank, taxonomicStatus) %>%
+  select(speciesKey, scientificName, rank, taxonomicStatus, kingdom) %>%
   
   # rename 'scientificName' to 'species_scientificName'
   rename(species_scientificName = scientificName) %>%
@@ -261,7 +261,8 @@ taxa_species <-
   group_by(speciesKey,
            species_scientificName,
            rank,
-           taxonomicStatus) %>%
+           taxonomicStatus,
+           kingdom) %>%
   
   # create 'includes' column
   summarize(includes = paste(
