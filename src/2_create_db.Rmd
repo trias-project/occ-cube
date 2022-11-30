@@ -148,6 +148,13 @@ real_fields <- c(
 field_types[which(names(field_types) %in% real_fields)] <- "REAL"
 ```
 
+Inspect field types:
+
+```{r inspect_field_types}
+field_types
+```
+
+
 Open connection to database:
 
 ```{r open_connection_to_db}
