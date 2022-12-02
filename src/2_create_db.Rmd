@@ -154,6 +154,7 @@ Inspect field types:
 field_types
 ```
 
+### Fill database with occurrence data
 
 Open connection to database:
 
@@ -244,7 +245,7 @@ issues_to_discard <- c(
 )
 ```
 
-Occurrences with the following occurrence status should filtered out as well:
+Occurrences with the following occurrence status should be filtered out as well:
 
 ```{r occurrenceStatus}
 occurrenceStatus_to_discard <- c(
@@ -426,6 +427,20 @@ any(map_lgl(issues_to_discard,
             }))
 ```
 
+Save issues values:
+
+```{r save_issues}
+write_csv(issues_left, 
+          file = here("data",
+                      "interim", 
+                      paste(key,
+                             "issues_values_left.csv",
+                             sep = "_")
+                      ),
+          na = ""
+)
+```
+
 We create an index on `identificationVerificationStatus`:
 
 ```{r idx_identificationVerificationStatus}
@@ -453,6 +468,21 @@ query <- glue_sql(
 status_verification_left <- dbGetQuery(sqlite_occ, query)
 status_verification_left
 ```
+
+Save identification verification status values:
+
+```{r save_id_ver_status}
+write_csv(status_verification_left, 
+          file = here("data",
+                      "interim", 
+                      paste(key,
+                             "identificationVerificationStatus_values_left.csv",
+                             sep = "_")
+                      ),
+          na = ""
+)
+```
+
 
 Number of occurrences left:
 
