@@ -35,8 +35,8 @@ library(RSQLite)        # To interact with SQlite databases
 Define key returned in `1_download.Rmd` and country:
 
 ```{r define_key_countries}
-key <- "0173465-210914110416597"
-countries <- c("IT")
+key <- "0183347-220831081235567"
+countries <- c("BE")
 ```
 
 Name and path of `.sqlite` file:
@@ -186,10 +186,10 @@ write_tsv(geodata_df, temp_file_coords, na = "")
 remove(geodata_df)
 ```
 
-Set random number generator seed (this helps reproducibility). We use the unique identifier of the [Zenodo dataset's DOI](https://doi.org/10.5281/zenodo.3637911) which the occurrence cube will be published to:
+Set random number generator seed (this helps reproducibility). We use the unique identifier of the [Zenodo dataset's DOI](https://doi.org/10.5281/zenodo.7389450) which the occurrence cube will be published to:
 
 ```{r set_seed}
-set.seed(3637911)
+set.seed(7389450)
 ```
 
 We define the function `reproject_assign()` to apply to each chunk:

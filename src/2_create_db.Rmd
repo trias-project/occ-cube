@@ -37,8 +37,8 @@ library(RSQLite)        # To interact with SQlite databases
 Define key returned in `1_download.Rmd` and country:
 
 ```{r define_key_countries}
-key <- "0173465-210914110416597"
-countries <- c("IT")
+key <- "0183347-220831081235567"
+countries <- c("BE")
 ```
 
 Download the occurrences from GBIF:
@@ -148,6 +148,14 @@ real_fields <- c(
 field_types[which(names(field_types) %in% real_fields)] <- "REAL"
 ```
 
+Inspect field types:
+
+```{r inspect_field_types}
+field_types
+```
+
+### Fill database with occurrence data
+
 Open connection to database:
 
 ```{r open_connection_to_db}
@@ -237,7 +245,7 @@ issues_to_discard <- c(
 )
 ```
 
-Occurrences with the following occurrence status should filtered out as well:
+Occurrences with the following occurrence status should be filtered out as well:
 
 ```{r occurrenceStatus}
 occurrenceStatus_to_discard <- c(
@@ -419,6 +427,20 @@ any(map_lgl(issues_to_discard,
             }))
 ```
 
+Save issues values:
+
+```{r save_issues}
+write_csv(issues_left, 
+          file = here("data",
+                      "interim", 
+                      paste(key,
+                             "issues_values_left.csv",
+                             sep = "_")
+                      ),
+          na = ""
+)
+```
+
 We create an index on `identificationVerificationStatus`:
 
 ```{r idx_identificationVerificationStatus}
@@ -446,6 +468,21 @@ query <- glue_sql(
 status_verification_left <- dbGetQuery(sqlite_occ, query)
 status_verification_left
 ```
+
+Save identification verification status values:
+
+```{r save_id_ver_status}
+write_csv(status_verification_left, 
+          file = here("data",
+                      "interim", 
+                      paste(key,
+                             "identificationVerificationStatus_values_left.csv",
+                             sep = "_")
+                      ),
+          na = ""
+)
+```
+
 
 Number of occurrences left:
 
