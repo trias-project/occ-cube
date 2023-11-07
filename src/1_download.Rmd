@@ -37,7 +37,7 @@ library(lubridate)      # To work with dates
 We define country we want to get data cube:
 
 ```{r define_countries}
-countries <- c("SI")
+countries <- c("LT")
 ```
 
 ## Basis of record
@@ -83,7 +83,7 @@ Trigger download:
 
 ```{r trigger_gbif_download}
 # Reuse existing download (comment to trigger new download)
-gbif_download_key <- "0047101-23100208453123"
+gbif_download_key <- "0048202-231002084531237"
 
 # Trigger new download (commented by default)
 # gbif_download_key <- occ_download(

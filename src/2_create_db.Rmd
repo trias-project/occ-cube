@@ -37,8 +37,8 @@ library(RSQLite)        # To interact with SQlite databases
 Define key returned in `1_download.Rmd` and country:
 
 ```{r define_key_countries}
-key <- "0047101-231002084531237"
-countries <- c("SI")
+key <- "0048202-231002084531237"
+countries <- c("LT")
 ```
 
 Download the occurrences from GBIF:
