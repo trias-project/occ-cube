@@ -111,7 +111,7 @@ Write download to list of downloads and check pending downloads:
 ```{r update_download_list}
 update_download_list(
   file = here::here("data", "raw", "gbif_downloads.tsv"), 
-  download_to_add = "0048195-231002084531237", 
+  download_to_add = gbif_download_key, 
   input_checklist = ""
 )
 ```
