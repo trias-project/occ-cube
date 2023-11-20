@@ -190,6 +190,7 @@ Set random number generator seed (this helps reproducibility). We use the unique
 
 ```{r set_seed}
 set.seed(10074895)
+# set.seed(10058400) # for the Belgian occurrences. We use the sqlite file generated in https://github.com/trias-project/occ-cube-alien/tree/20231106
 ```
 
 We define the function `reproject_assign()` to apply to each chunk:
