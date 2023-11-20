@@ -33,7 +33,7 @@ library(RSQLite)        # To interact with SQlite databases
 Define key returned in `1_download.Rmd` and country:
 
 ```{r define_key_countries}
-key <- "0183347-220831081235567"
+key <- "0031758-231002084531237"
 countries <- c("BE")
 ```
 
@@ -135,7 +135,7 @@ occ_cube_species <-
 
 ## Map taxa
 
-Grouping by `speciesKey`, we loose informations about which taxa share the same `speciesKey`. This information could be sometimes helpful. We extract it in a separate data.frame, `taxa_species`.
+Grouping by `speciesKey`, we loose information about which taxa share the same `speciesKey`. This information could be sometimes helpful. We extract it in a separate data.frame, `taxa_species`.
 
 For speeding up the extraction, we create an index on `speciesKey`, `taxonKey` and `scientificName` if not present:
 

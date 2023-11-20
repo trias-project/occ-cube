@@ -37,8 +37,8 @@ library(RSQLite)        # To interact with SQlite databases
 Define key returned in `1_download.Rmd` and country:
 
 ```{r define_key_countries}
-key <- "0183347-220831081235567"
-countries <- c("BE")
+key <- "0051251-231002084531237"
+countries <- c("PT")
 ```
 
 Download the occurrences from GBIF:
@@ -260,8 +260,11 @@ We won't take into account unverified observations neither:
 identificationVerificationStatus_to_discard <- c(
   "unverified",
   "unvalidated",
+  "not validated",
+  "under validation",
   "not able to validate",
   "control could not be conclusive due to insufficient knowledge",
+  "uncertain",
   "unconfirmed",
   "unconfirmed - not reviewed",
   "validation requested"
