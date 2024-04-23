@@ -52,7 +52,7 @@ taxonKey | scientificName | numberOfOccurrences | taxonRank | taxonomicStatus
 
 Table based on this [GBIF download](https://doi.org/10.15468/dl.rej1cz).
 
-By aggregating we would loose this information, so we provide aside the cubes, e.g. `be_species_cube.csv` for Belgium, a kind of taxonomic compendiums, e.g. `be_species_info.csv`. They include for each taxa in the cube all the synonyms or infraspecies whose occurrences contribute to the total count. Differently from data cube of alien species, these data cubes are completely built upon the taxonomic relationships of [GBIF Backbone Taxonomy](https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c). Both data cubes and taxonomic compendiums are saved in `data/processed`.
+By aggregating we would loose this information, so we provide aside the cubes, e.g. `be_species_cube.csv` for Belgium, a kind of taxonomic compendiums, e.g. `be_species_info.csv`. They include for each taxa in the cube all the synonyms or infraspecies whose occurrences contribute to the total count. Differently from data cube of alien species, these data cubes are completely built upon the taxonomic relationships of [GBIF Backbone Taxonomy](https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c).
 
 For example, _Aedes japonicus (Theobald, 1901)_ is an accepted species present in the Belgian cube: based on the information stored in `occ_belgium_taxa.tsv`, its occurrences include occurrences linked to the following taxa:
 1. [Aedes japonicus (Theobald, 1901)](https://www.gbif.org/species/1652212)
@@ -69,6 +69,8 @@ Slovenia | SI
 Lithuania | LT
 Romania | RO
 
+Both data cubes and taxonomic compendiums are not saved in this repository as some of them are large files. They are published on zenodo. See [Occurrence cubes at species level for European countries](https://zenodo.org/doi/10.5281/zenodo.3637910).
+ 
 ## Repo structure
 
 The repository structure is based on [Cookiecutter Data Science](http://drivendata.github.io/cookiecutter-data-science/). Files and directories indicated with `GENERATED` should not be edited manually.
@@ -81,8 +83,7 @@ The repository structure is based on [Cookiecutter Data Science](http://drivenda
 │
 ├── data
 │   ├── raw              : Occurrence data as downloaded from GBIF GENERATED
-│   ├── interim          : big sqlite and text files, stored locally  GENERATED
-│   └── processed        : occurrence data cubes and related taxa informations GENERATED
+│   └── interim          : big sqlite and text files, stored locally  GENERATED
 │
 └── src
     ├── 1_download.Rmd    : Script to trigger a download of occurrences in a country
